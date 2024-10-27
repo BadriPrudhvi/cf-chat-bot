@@ -32,11 +32,11 @@ Keep your responses clear, concise, and well-formatted.`
             { role: "user", content: userInput },
         ]
 
-        const response = await ai.run("@cf/meta/llama-3.1-70b-instruct",  // Using a different model that might be more widely available
+        const response = await ai.run("@cf/meta/llama-3.1-70b-instruct",
             { 
                 messages, 
-                temperature: 0.5,
-                max_tokens: 1024, 
+                temperature: 1,
+                max_tokens: 2048, 
             }, 
             {
                 gateway: {
