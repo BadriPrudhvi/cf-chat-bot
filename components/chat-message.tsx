@@ -1,4 +1,4 @@
-import { User, Bot } from 'lucide-react'
+import { UserRound, Bot } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { Components } from 'react-markdown'
@@ -57,7 +57,7 @@ export function ChatMessage({ message, isLoading = false }: ChatMessageProps) {
         }`}
       >
         {message.role === 'user' ? (
-          <User className={`h-4 w-4 ${
+          <UserRound className={`h-4 w-4 ${
             message.role === 'user' ? 'text-primary-foreground' : ''
           }`} />
         ) : (
