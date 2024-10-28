@@ -2,6 +2,7 @@ import { UserRound, Bot } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import type { Components } from 'react-markdown'
+import { Skeleton } from '@/components/ui/skeleton'
 
 interface ChatMessageProps {
   message: {
@@ -67,25 +68,35 @@ export function ChatMessage({ message, isLoading = false }: ChatMessageProps) {
       <div className={`relative flex-1 ${
         message.role === 'user' ? 'flex justify-end' : ''
       }`}>
-        <div
-          className={`rounded-lg px-4 py-2 break-words ${
-            message.role === 'user'
-              ? 'bg-primary text-primary-foreground inline-block max-w-[80%]'
-              : 'bg-muted max-w-[80%]'
-          }`}
-        >
-          {message.role === 'assistant' ? (
-            <ReactMarkdown 
-              remarkPlugins={[remarkGfm]}
-              className="prose dark:prose-invert prose-sm max-w-none"
-              components={components}
-            >
-              {message.content}
-            </ReactMarkdown>
-          ) : (
-            message.content
-          )}
-        </div>
+        {isLoading ? (
+          <div className="bg-muted max-w-[80%] rounded-lg px-4 py-2">
+            <div className="space-y-3">
+              <Skeleton className="h-4 w-[60%] bg-gray-200 dark:bg-gray-700" />
+              <Skeleton className="h-4 w-[80%] bg-gray-200 dark:bg-gray-700" />
+              <Skeleton className="h-4 w-[40%] bg-gray-200 dark:bg-gray-700" />
+            </div>
+          </div>
+        ) : (
+          <div
+            className={`rounded-lg px-4 py-2 break-words ${
+              message.role === 'user'
+                ? 'bg-primary text-primary-foreground inline-block max-w-[80%]'
+                : 'bg-muted max-w-[80%]'
+            }`}
+          >
+            {message.role === 'assistant' ? (
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                className="prose dark:prose-invert prose-sm max-w-none"
+                components={components}
+              >
+                {message.content}
+              </ReactMarkdown>
+            ) : (
+              message.content
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

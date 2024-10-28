@@ -24,7 +24,9 @@ export default function Chatbot() {
     if (!input.trim()) return
 
     const userMessage: Message = { role: 'user', content: input.trim() }
-    setMessages((prev) => [...prev, userMessage])
+    const loadingMessage: Message = { role: 'assistant', content: '' }
+    
+    setMessages((prev) => [...prev, userMessage, loadingMessage])
     setInput('')
     setIsLoading(true)
 
@@ -36,10 +38,12 @@ export default function Chatbot() {
       })
 
       const data = await response.json() as { aiResponse: string }
-      const aiMessage: Message = { role: 'assistant', content: data.aiResponse }
-      setMessages((prev) => [...prev, aiMessage])
+      // Replace the loading message with the actual response
+      setMessages((prev) => [...prev.slice(0, -1), { role: 'assistant', content: data.aiResponse }])
     } catch (error) {
       console.error('Error:', error)
+      // Remove the loading message if there's an error
+      setMessages((prev) => prev.slice(0, -1))
     } finally {
       setIsLoading(false)
     }
